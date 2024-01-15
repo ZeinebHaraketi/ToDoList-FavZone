@@ -4,7 +4,7 @@ include_once "../config.php";
 require_once "../model/utilisateur.php";
 include_once "UtilisateurController.php";
 
-header("Access-Control-Allow-Origin: *"); // Permettre à tous les domaines
+header("Access-Control-Allow-Origin: *"); 
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With, XMLHttpRequest");
 header("Access-Control-Allow-Credentials: true");
@@ -37,7 +37,6 @@ switch ($method) {
   case 'POST':
     $data = json_decode(file_get_contents('php://input'), true);
     $response = $controller->ajouterUtilisateur(new Utilisateur(...$data));
-    //echo json_encode($response);
     if ($response) {
         echo json_encode(["message" => "Utilisateur ajouté avec succès"]);
     } else {
@@ -45,30 +44,13 @@ switch ($method) {
     }
     break;
 
-    // case 'PUT':
-    //     // Modifier un utilisateur
-    //     $data = json_decode(file_get_contents('php://input'), true);
-    //     $Id = $_GET['id'] ?? null;
-        
-    //     if ($Id && $data) {
-    //         $response = $controller->modifierUtilisateur($Id, new Utilisateur(...$data));
-    //         if ($response) {
-    //             echo json_encode(["message" => "Utilisateur modifié avec succès"]);
-    //         } else {
-    //             http_response_code(400); 
-    //             echo json_encode(["error" => "La modification de l'utilisateur a échoué"]);
-    //         }
-    //     } else {
-    //         http_response_code(400); 
-    //         echo json_encode(["error" => "ID de l'utilisateur ou données manquantes"]);
-    //     }
-    // break;
+   
     case 'PUT':
         // Modifier un utilisateur
         $data = json_decode(file_get_contents('php://input'), true);
         
         if ($id && $data) {
-            $response = $controller->modifierUtilisateur($id, new Utilisateur(...$data)); // Use $Id here
+            $response = $controller->modifierUtilisateur($id, new Utilisateur(...$data)); 
             if ($response) {
                 echo json_encode(["message" => "Utilisateur modifié avec succès"]);
             } else {
@@ -80,35 +62,14 @@ switch ($method) {
             echo json_encode(["error" => "ID de l'utilisateur ou données manquantes"]);
         }
     break;
-    // case 'PUT':
-    //     // Modifier un utilisateur
-    //     // Extract the user ID from the URL
-    //     $urlParts = explode('/', $_SERVER['REQUEST_URI']);
-    //     $Id = end($urlParts);
     
-    //     // Get the data from the request body
-    //     $data = json_decode(file_get_contents('php://input'), true);
-        
-    //     if ($Id && $data) {
-    //         $response = $controller->modifierUtilisateur($Id, new Utilisateur(...$data)); // Use $Id here
-    //         if ($response) {
-    //             echo json_encode(["message" => "Utilisateur modifié avec succès"]);
-    //         } else {
-    //             http_response_code(400); 
-    //             echo json_encode(["error" => "La modification de l'utilisateur a échoué"]);
-    //         }
-    //     } else {
-    //         http_response_code(400); 
-    //         echo json_encode(["error" => "ID de l'utilisateur ou données manquantes"]);
-    //     }
-    //     break;
     
     
 
     
     case 'DELETE':
         // Supprimer un utilisateur
-        // Extract the user ID from the URL
+        // Extract the  id user from the URL
         $urlParts = explode('/', $_SERVER['REQUEST_URI']);
         $id = end($urlParts);
     
